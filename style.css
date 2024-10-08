@@ -1,0 +1,73 @@
+body {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #FF9A8B, #FF6A88, #FF99AC);
+    margin: 0;
+}
+
+/* Game container styling */
+.game-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 320px;
+    border: 4px solid #FF6A88;
+    animation: pop-up 0.6s ease-in-out;
+}
+
+/* Heading and instructions styling */
+h1 {
+    color: #333;
+    font-size: 2em;
+    text-shadow: 2px 2px 4px #FF6A88;
+}
+
+.instructions-container, .instructions {
+    font-size: 1em;
+    color: #555;
+}
+
+/* Animated button styling */
+button {
+    background-color: #FF6A88;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    margin: 8px;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: 1em;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+button:hover {
+    background-color: #FF99AC;
+    transform: scale(1.1);
+}
+
+/* Pop-up animation */
+@keyframes pop-up {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* AI Guessing Game styling */
+#ai-guess {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+#guess-count {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+}
