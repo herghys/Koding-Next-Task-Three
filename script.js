@@ -1,120 +1,259 @@
-// Initial setup for AI guessing game
-const min = 1; // Set minimum to 1 (to match the game rules)
-const max = 20; // Keep max at 100
-let guessCount = 0; // Start at 0 to avoid counting the first guess before it's made
+/* 
+ * AI Logics Made by Herghys (Helmi Arghya Santosa) - 2024
+ * AI Logics converted from C# Script
+*/
+//#region Variables
+//Constants
+const maxValue = 100;
+const minValue = 1;
+
+//AI Variables
 let aiGuess = 0;
-let lastGuess = 0;
-let tempMin = min; // Temporary min to track range
-let tempMax = max; // Temporary max to track range
 
-// Function to generate a random guess when the guess is lower
-function generateRandomGuessLower() {
-    // Generate a random guess between the current tempMin and lastGuess (exclusive)
+let aiMaxValue = 0;
+let aiMinValue = 0;
 
-    if (aiGuess >= max || lastGuess >= max) {
-        console.log("aiGuess >= max || lastGuess >= max");
-        aiGuess = Math.floor(Math.random() * (max - min + 1)) + min; // New guess within range
-    }
+let aiLastHigherGuess = 0;
+let aiLastLowerGuess = 0;
 
-    if (lastGuess <= min) {
-        console.log("lastGuess <= min");
-        aiGuess = min; // If lastGuess is equal to min, guess remains at min
-    } 
-    else {
-        console.log("Generating guess lower than lastGuess");
-        aiGuess = Math.floor(Math.random() * (lastGuess - min)) + min; // Ensuring it's below lastGuess
-    }
+let aiLowerGuessCount = 0;
+let aiHigherGuessCount = 0;
 
-    // Double check if tempMin >= max and reset tempMin if necessary
-    if (tempMin >= max){
-        tempMin = min; // Reset tempMin to min value
-        tempMax = max;
-        aiGuess = max; // Set AI Guess to max value for next iteration
-    }
+//Helper
+let aiLastNumber = 0;
+let aiValueAverage = 0;
+//#endregion Variables
 
-    console.log("New AI Guess (Lower):", aiGuess);
+
+//-------------------------------------//
+/* Challenge #1: Add AI Guess Counter
+ * 1. For now AI guess is still 0
+ * 2. HTML / CSS is already provided, you only needed to add / modify the JavaScript
+ * 3. If you're ready, don't forget to uncomment the code below "Challenge #1 View"
+ * 
+ * Task: Add a GuessCounter when AI is Guessing
+ * 
+ * You can add aiGuessCount anywhere
+ * You may modify the value of aiGuessCount
+ * For Example:
+ *  aiGuessCount++;
+ *  aiGuessCount = a + b;
+ *  aiGuessCount = 1 +  10;
+ *  aiGuessCount = aiGuessCount + 1;
+*/
+let aiGuessCount = 0;
+
+
+/* Challenge #2: Let's add auto checker if the value is correct
+ * 1. You will be provided a user generated value and will be set before the game started
+ * 3. HTML / CSS is already provided, you only needed to add / modify the JavaScript
+ * 
+ * Task: Add a checker if aiGuess == userValue then call showWin();
+*/
+let userValue = 0;
+//-------------------------------------//
+
+
+
+//#region AI Logic Functions
+function initialGeneration() {
+    aiGuess = Math.floor(Math.random() * (aiMaxValue - aiMinValue + 1)) + aiMinValue;
 }
 
-// Function to generate a random guess when the guess is higher
-function generateRandomGuessUpper() {
-    // Generate a random guess between lastGuess (exclusive) and tempMax
-    if (aiGuess <= min || lastGuess <= min) {
-        console.log("lastGuess <= min");
-        aiGuess = Math.floor(Math.random() * (max - min + 1)) + min; // New guess within full range
-    } 
-    if (lastGuess >= max) {
-        console.log("lastGuess >= max");
-        aiGuess = max; // If lastGuess is equal to max, guess remains at max
-    } 
-    else {
-        console.log("Generating guess higher than lastGuess");
-        aiGuess = Math.floor(Math.random() * (tempMax - lastGuess)) + lastGuess + 1; // Ensuring it's above lastGuess
+function getRandomInt(min, max) {
+    // Generate a random integer between min (inclusive) and max (inclusive)
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generateHigher() {
+    //Add Chcker if LastNumber is Updated
+    let lastNumberUpdated = false;
+
+    //Reset lastLower
+    aiLastLowerGuess = aiValueAverage;
+
+    //Check if user has already press "Lower"
+    if (aiLowerGuessCount > 0) {
+
+        //Update ai's last guessed Number
+        aiLastNumber = aiGuess;
+        lastNumberUpdated = true;
     }
 
-    // Double check if tempMax <= min and reset tempMax if necessary
-    if (tempMax <= min) {
-        tempMax = max; // Resetting tempMax to max
-        tempMin = min;
-        aiGuess = max; // Set AI Guess to max value for next iteration
+    //Min Checker with lastAIHigherGuess
+    let randomMin = aiValueAverage;
+    let randomMax = aiMaxValue;
+
+    if (aiLastHigherGuess > aiValueAverage){
+        randomMin = aiLastHigherGuess;
     }
 
-    console.log("New AI Guess (Upper):", aiGuess);
-    lastGuess = aiGuess;
+    //Let AI Guess, given range min: randomMin, max: aiMaxValue
+    aiGuess = getRandomInt(randomMin, randomMax);
+
+    //Challenge 3 #1 Code Here
+
+
+    //End of Challenge 3 #1 Code
+
+    //Update higher lower guess
+    aiLastHigherGuess = aiGuess;
+
+    //Update new average value
+    updateAIAverageValue();
+
+    //Check if ai's last number is updated or no
+    //If not updated => return
+    if (!lastNumberUpdated)
+        return;
+
+    //If last number was updated => check if the last guessed number lower than average
+    //If lower => Update AI's min value to ai's last number
+    if (aiLastNumber < aiValueAverage)
+        aiMinValue = aiLastNumber;
 }
 
-function initGuess(){
-    aiGuess = Math.floor(Math.random() * (max - min + 1)) + min; // New guess within full range
+function generateLower() {
+    //Add Chcker if LastNumber is Updated
+    let lastNumberUpdated = false;
+
+    //Reset lastLower
+    aiLastHigherGuess = aiValueAverage;
+
+
+    //Check if user has already press "Higher"
+    if (aiHigherGuessCount > 0) {
+
+        //Update ai's last guessed Number
+        aiLastNumber = aiGuess;
+        lastNumberUpdated = true;
+    }
+
+    //Min Checker with lastAIHigherGuess
+    let randomMin= aiValueAverage;
+    let randomMax= aiMinValue;
+
+    if (aiLastLowerGuess < aiValueAverage){
+        randomMax = aiLastLowerGuess;
+        console.log(`aiLastLowerGuess < aiValueAverage $${randomMin} - ${randomMax}`);
+    }
+
+    if (aiMinValue > randomMax) {
+        randomMin = minValue;
+        randomMax = aiGuess;
+        console.log(`aiMinValue > randomMax ${randomMin} - ${randomMax}`)
+    }
+
+    //Let AI Guess, given range min: randomMin, max: randomMax 
+    console.log(`${randomMin} - ${randomMax}`)
+    aiGuess = getRandomInt(randomMin, randomMax);
+    console.log(`aiGuess ${aiGuess}`)
+    //Challenge 3 #2 Code Here
+
+
+    //End of Challenge 3 #2 Code
+
+    //Update last lower guess
+    aiLastLowerGuess = aiGuess;
+
+    console.log(`aiLastLowerGuess ${aiLastLowerGuess}`)
+
+    updateAIAverageValue();
+    console.log(`Average ${aiValueAverage}`)
+    
+
+    //Check if ai's last number is updated or no
+    //If not updated => return
+    if (!lastNumberUpdated)
+        return;
+
+    //If last number was updated => check if the last guessed number lower than average
+    //If lower => Update AI's max value to ai's last number;
+    if (aiLastNumber > aiValueAverage)
+        aiMaxValue = aiLastNumber;
 }
 
-// Function to update the AI's guess display
-function updateGuess() {
-    document.getElementById('guess').textContent = aiGuess;
-    document.getElementById('guess-count').textContent = `Number of guesses: ${guessCount + 1}`; // Increment for display
+function updateAIAverageValue() {
+    console.log(`Update Average`);
+    console.log(`Max ${aiMaxValue} - Min ${aiMinValue}`);
+
+    aiValueAverage = Math.floor((aiMaxValue + aiMinValue) / 2);
+}
+//#endregion AI Logic Functions
+
+
+//#region UI and Logic
+//Update UI Display
+function updateGuesDisplay() {
+
+    document.getElementById("ai-guess").textContent = `AI's Guess: ${aiGuess}`;
+    document.getElementById("ai-guess-count").textContent = `Number of guessess: ${aiGuessCount}`;
 }
 
-// Function to start the game
+//Show Win
+function showWin() {
+    alert(`Yay! The AI guessed your number ${aiGuess} correctly in ${aiHigherGuessCount + aiLowerGuessCount + 1} attempts!`);
+    resetGame(); // Reset the game for a new round
+}
+
+//Start Game
 function startGame() {
     document.getElementById('instructions-container').style.display = 'none';
     document.getElementById('game-container').style.display = 'block';
-    guessCount = 0; // Reset the count at the start
-    tempMin = min; // Reset tempMin to the original min
-    tempMax = max; // Reset tempMax to the original max
-    initGuess(); // Generate the first guess
-    updateGuess();
+
+    //Update Value
+    aiMaxValue = maxValue;
+    aiMinValue = minValue;
+
+    initialGeneration();
+    updateAIAverageValue();
+    aiLastNumber = aiValueAverage;
+    updateGuesDisplay();
 }
 
-// Event listener for the start game button
-document.getElementById('start-game-btn').addEventListener('click', startGame);
-
-// Event listeners for the buttons to adjust AI's guess
-document.getElementById('higher-btn').addEventListener('click', () => {
-    lastGuess = aiGuess; // Update lastGuess to the current guess
-    tempMin = lastGuess + 1; // Set tempMin to the current guess (exclusive)
-    guessCount++;
-    generateRandomGuessUpper(); // Generate a new guess based on the updated limits
-    updateGuess();
-});
-
-document.getElementById('lower-btn').addEventListener('click', () => {
-    lastGuess = aiGuess; // Update lastGuess to the current guess
-    tempMax = lastGuess - 1; // Set tempMax to lastGuess - 1
-    guessCount++;
-    generateRandomGuessLower(); // Generate a new guess based on the updated limits
-    updateGuess();
-});
-
-document.getElementById('correct-btn').addEventListener('click', () => {
-    alert(`Yay! The AI guessed your number in ${guessCount + 1} tries!`);
-    resetGame();
-});
-
-// Function to reset the game to its initial state
+// Function to reset the game for another round
 function resetGame() {
-    guessCount = 0; // Reset the guess count
-    tempMin = min; // Reset tempMin back to original min
-    tempMax = max; // Reset tempMax back to original max
-    generateRandomGuessUpper(); // Generate the first guess for the new game
-    updateGuess();
-    document.getElementById('instructions-container').style.display = 'block';
-    document.getElementById('game-container').style.display = 'none';
+    // Reset all game variables
+    aiGuess = 0;
+    aiMaxValue = maxValue; // Reset to max number
+    aiMinValue = minValue; // Reset to min number
+    aiLowerGuessCount = 0; // Reset lower guess count
+    aiHigherGuessCount = 0; // Reset higher guess count
+    aiLastNumber = 0; // Reset the last AI guess
+    aiValueAverage = 0; // Reset the average AI guess
+
+    // Show instructions again and hide the game area
+    document.getElementById("instructions-container").style.display = "block";
+    document.getElementById("game-container").style.display = "none";
 }
+//#endregion UI and Logic
+
+//#region Game Controls
+// "Start Game" Clicked
+document.getElementById("start-game-btn").addEventListener("click", function () {
+    // Hide the instructions and show the game area
+    document.getElementById("instructions-container").style.display = "none";
+    document.getElementById("game-container").style.display = "block";
+    startGame(); // Start the AI guessing
+});
+
+// "Higher" Clicked
+document.getElementById("higher-btn").addEventListener("click", function () {
+    // Tell the AI that its guess was too low
+    generateHigher();
+    updateGuesDisplay();
+});
+
+// "Lower" clicked
+document.getElementById("lower-btn").addEventListener("click", function () {
+    // Tell the AI that its guess was too high
+    generateLower();
+    updateGuesDisplay();
+});
+
+// "Correct" clicked
+document.getElementById("correct-btn").addEventListener("click", function () {
+    // Celebrate the AI's correct guess
+    showWin();
+});
+//#endregion Game Controls
