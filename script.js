@@ -135,10 +135,10 @@ function generateLower() {
 
     if (aiLastLowerGuess < aiValueAverage){
         randomMax = aiLastLowerGuess;
-        console.log(`aiLastLowerGuess < aiValueAverage $${randomMin} - ${randomMax}`);
+        console.log(`aiLastLowerGuess < aiValueAverage ${randomMin} - ${randomMax}`);
     }
 
-    if (aiMinValue > randomMax) {
+    if (randomMin > randomMax) {
         randomMin = minValue;
         randomMax = aiGuess;
         console.log(`aiMinValue > randomMax ${randomMin} - ${randomMax}`)
