@@ -15,17 +15,29 @@
             <p>🎉 Welcome to the AI Guessing Game! 🎉</p>
             <p>Instructions:</p>
             <ul>
-                <li>🤔 Think of a number between 1 and 100 but don't tell anyone!</li>
+                <li>🤔 Think of a number between 1 and 100</li>
                 <li>🕵️ The AI will try to guess your number.</li>
                 <li>👆 You will guide the AI by clicking on the "Higher", "Lower", or "Correct" buttons.</li>
                 <li>📈 If your number is higher than the AI's guess, click "Higher".</li>
                 <li>📉 If your number is lower, click "Lower".</li>
                 <li>🏆 If the AI guesses correctly, click "Correct" to end the game.</li>
             </ul>
+            <div id="user-input-container">
+                <label for="user-number">What is your number?</label>
+                <input 
+                    type="number" 
+                    id="user-number" 
+                    placeholder="Enter your number"
+                    required
+                    min="1"
+                    max="100" />
+                <div id="user-input-error-message" style="color: red; display: none;">Please enter a number to start the game.</div>
+            </div>
             <button id="start-game-btn">Start Game 🎯</button>
         </div>
         
         <div id="game-container" style="display: none;">
+            <p id="your-number">Your Number: <span id="guess">50</span></p>
             <p id="ai-guess">AI's Guess: <span id="guess">50</span></p>
             <p>Is your number higher, lower, or correct?</p>
             <button id="higher-btn">Higher 🔼</button>
@@ -36,5 +48,7 @@
         </div>
     </div>
     <script src="script.js"></script>
+    <script src="game_ui_control.js"></script>
+    <script src="game_helper.js"></script>
 </body>
 </html>
