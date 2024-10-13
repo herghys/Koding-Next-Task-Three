@@ -1,14 +1,3 @@
-function getRandomInt(min, max) {
-    // Generate a random integer between min (inclusive) and max (inclusive)
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-//Show Win
-function showWin() {
-    alert(`Yay! The AI guessed your number ${aiGuess} correctly in ${aiHigherGuessCount + aiLowerGuessCount + 1} attempts!`);
-    resetGame(); // Reset the game for a new round
-}
-
 //Start Game
 function startGame() {
     instructionsContainer.style.display = 'none';
@@ -18,6 +7,7 @@ function startGame() {
     aiMaxValue = maxValue;
     aiMinValue = minValue;
 
+    //Setup Initial
     initialGeneration();
     updateAIAverageValue();
     aiLastNumber = aiValueAverage;

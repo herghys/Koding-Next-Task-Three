@@ -91,10 +91,16 @@ function generateHigher() {
         lastNumberUpdated = true;
     }
 
-    //Min Checker with lastAIHigherGuess
+    // Min Checker with lastAIHigherGuess
+    // Setup RandomMin as the average (lowest boundary)
+    // Setup RandomMax as ai's max Value since we won't it to be set as global max value (100)
     let randomMin = aiValueAverage;
     let randomMax = aiMaxValue;
 
+    // if (aiLastHigherGuess > aiValueAverage)
+    // Set randomMin value as last Higher guess
+    // This will set lowest value in random, so it will keep track on generating higher value
+    // while setting min value as last higher guess
     if (aiLastHigherGuess > aiValueAverage){
         randomMin = aiLastHigherGuess;
     }
@@ -119,8 +125,9 @@ function generateHigher() {
     if (!lastNumberUpdated)
         return;
 
-    //If last number was updated => check if the last guessed number lower than average
-    //If lower => Update AI's min value to ai's last number
+    // If last number was updated => check if the last guessed number lower than average
+    // If lower => Update AI's min value to ai's last number
+    // This will make whenever you press "lower" you won't go below the last time
     if (aiLastNumber < aiValueAverage)
         aiMinValue = aiLastNumber;
 }
@@ -143,14 +150,23 @@ function generateLower() {
         lastNumberUpdated = true;
     }
 
-    //Min Checker with lastAIHigherGuess
+    // Min Checker with lastAIHigherGuess
+    // Set RandomMin value as the average (Lowset Minimal)
+    // Set the Max as AI's Min Value (as initialization)
     let randomMin= aiValueAverage;
     let randomMax= aiMinValue;
 
+    // Check if aiLastLowerGuess is lower than ai's average value
+    // if yes, then set aiLastLowerGuess into randomMax
+    // It is required to ensure the ai keep guessing lower
+    // Minimizing the chance for the AI to guess random number higher than the last AI Guess
     if (aiLastLowerGuess < aiValueAverage){
         randomMax = aiLastLowerGuess;
     }
 
+    // Add another check if our randomMin is higher than randomMax
+    // set randomMin to minValue
+    // set randomMax to aiGuess (the last ai guess)
     if (randomMin > randomMax) {
         randomMin = minValue;
         randomMax = aiGuess;
@@ -183,9 +199,17 @@ function generateLower() {
 }
 
 //Update Average Value
+//Average value will be used as highest max in get lower or lowest minimal in get higher
 function updateAIAverageValue() {
     aiValueAverage = Math.floor((aiMaxValue + aiMinValue) / 2);
 }
+
+//Moved getRandomInt for better script readability
+function getRandomInt(min, max) {
+    // Generate a random integer between min (inclusive) and max (inclusive)
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 //OnClic Handler (Higher)
 function onGenerateHigherClicked(){
@@ -207,4 +231,10 @@ function onGenerateLowerClicked(){
 function updateGuessDisplay() {
     aiGuessLabel.textContent = `AI's Guess: ${aiGuess}`;
     aiGuessCountLabel.textContent = `Number of guessess: ${aiGuessCount}`;
+}
+
+//Show Win
+function showWin() {
+    alert(`Yay! The AI guessed your number ${aiGuess} correctly in ${aiHigherGuessCount + aiLowerGuessCount + 1} attempts!`);
+    resetGame(); // Reset the game for a new round
 }

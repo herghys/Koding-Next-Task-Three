@@ -21,7 +21,7 @@ There are 3 challenges available for this session.
 ### Challenge #1 (Easy): Let's add auto show win status if aiGuess value = your inputtedValue
 #### Difficulty: Easy
 
-Your number selection is stored, but your program need to now wether the AI is correct, you can do it manually by clicking the "Correct" button, but how if we make our program to automatically tell if The AI is correct?
+Your number selection is stored, but your program need to know whether the AI is correct, you can do it manually by clicking the "Correct" button, but how if we make our program to automatically tell if The AI is correct?
 
 Task
 -
@@ -50,7 +50,7 @@ function showWin() {
 ### Challenge #2 (Medium): Add AI Guess Counter
 #### Difficulty: Medium
 
-AI Guess count is still locked to 0, can you help the AI to count how many it has guess?
+AI Guess count is still locked to 0, can you help the AI to count how many it has guessed?
 
 Task
 -
@@ -76,18 +76,18 @@ let aiGuessCount = 0;
 ### Challenge 3 (Hard): Prevent the AI to give same results multiple times in a row
 There is a slight chance where the AI will give the same result multiple times in a row, such as:
 ```javascript
-[2, 32, 32, 32 , 31, 90, 90]
+[2, 32, 32, 32, 31, 90, 90]
 ```
 Task: 
 -
 - Add some code to prevent the AI to generate the same result multiple times in a row. You need to use ```while``` statement for this task. 
-- This loop statement needs to placed whenever the AI is generating lower / higher value
+- This loop statement needs to be placed whenever the AI is generating lower / higher value
 - You may modify / add variables <b>IF NEEDED</b>
 - AI Logic inside ```script.js```
 
 
 Hint:
-Generate Lower
+Generate Lower and Generate Higher
 ```javascript
 function generateHigher() {
     // code
