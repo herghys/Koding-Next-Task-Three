@@ -21,7 +21,7 @@ function startGame() {
     initialGeneration();
     updateAIAverageValue();
     aiLastNumber = aiValueAverage;
-    updateGuesDisplay();
+    updateGuessDisplay();
 }
 
 // Function to reset the game for another round

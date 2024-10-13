@@ -13,9 +13,9 @@ Helmi Arghya Santosa
 ## Play Test (Demo)
 [Click Here To Play the Demo](https://herghys.github.io/Koding-Next-Task-Three/)
 
+
 ## Challenge(s) for Kids
 There are 3 challenges available for this session.
-
 
 ---
 ### Challenge #1 (Easy): Let's add auto show win status if aiGuess value = your inputtedValue
@@ -25,7 +25,9 @@ Your number selection is stored, but your program need to now wether the AI is c
 
 Task
 -
-Add a checker if aiGuess == userValue then call showWin()
+- Add a checker if aiGuess == userValue then call showWin()
+- AI Logic inside ```script.js```
+
 for example:
 ```js
 if (aiGuess == userValue){
@@ -52,7 +54,8 @@ AI Guess count is still locked to 0, can you help the AI to count how many it ha
 
 Task
 -
-Add a GuessCounter when AI is Guessing
+- Add a GuessCounter when AI is Guessing
+- AI Logic inside ```script.js```
 
 What you can do:
 - You can add aiGuessCount anywhere
@@ -80,6 +83,7 @@ Task:
 - Add some code to prevent the AI to generate the same result multiple times in a row. You need to use ```while``` statement for this task. 
 - This loop statement needs to placed whenever the AI is generating lower / higher value
 - You may modify / add variables <b>IF NEEDED</b>
+- AI Logic inside ```script.js```
 
 
 Hint:

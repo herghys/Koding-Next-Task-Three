@@ -191,7 +191,7 @@ function updateAIAverageValue() {
 function onGenerateHigherClicked(){
     // Tell the AI that its guess was too low
     generateHigher();
-    updateGuesDisplay();
+    updateGuessDisplay();
 }
 
 
@@ -199,12 +199,12 @@ function onGenerateHigherClicked(){
 function onGenerateLowerClicked(){
      // Tell the AI that its guess was too high
      generateLower();
-     updateGuesDisplay();
+     updateGuessDisplay();
 }
 
 
 //Update UI Display
-function updateGuesDisplay() {
+function updateGuessDisplay() {
     aiGuessLabel.textContent = `AI's Guess: ${aiGuess}`;
     aiGuessCountLabel.textContent = `Number of guessess: ${aiGuessCount}`;
 }
