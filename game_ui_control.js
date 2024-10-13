@@ -1,22 +1,26 @@
-const errorMessage = document.getElementById("user-input-error-message");
-const userNumberInputText = document.getElementById("user-number");
-const aiGuessLabel = document.getElementById("ai-guess");
-const yourNumberLabel = document.getElementById("your-number");
-const aiGuessCountLabel = document.getElementById("ai-guess-count");
-const instructionsContainer = document.getElementById('instructions-container');
-const gameContainer = document.getElementById('game-container');
-let userNumberInput =0;
+const errorMessage = document.getElementById("user-input-error-message"); //Referencing error message
+const userNumberInputText = document.getElementById("user-number"); //Referencing userNumberInputText
+const aiGuessLabel = document.getElementById("ai-guess"); //Referencing aiGuessLabel
+const yourNumberLabel = document.getElementById("your-number"); //Referencing yourNumberLabel
+const aiGuessCountLabel = document.getElementById("ai-guess-count"); //Referencing aiGuessCountLabel
+const instructionsContainer = document.getElementById('instructions-container'); //Referencing instructionsContainer
+const gameContainer = document.getElementById('game-container'); //Referencing gameContainer
+
+let userNumberInput =0; //Init
 
 
-//#region Game Controls
+// "user-number" Blur Listener
 userNumberInputText.addEventListener("blur", function(){
     userNumberInput = parseInt(userNumberInputText.value, 10);
+
+    //Check number input < minvalue? show Error and give default value
     if (userNumberInput < minValue) {
         errorMessage.style.display = "block";
         errorMessage.textContent = `Cannot lower than ${minValue}` ;
         userNumberInputText.value = minValue;
 
     }
+    //Check number input > maxvalue? show Error and give default value
     else if (userNumberInput > maxValue){
         errorMessage.style.display = "block";
         errorMessage.textContent = `Cannot higher than ${maxValue}` ;
@@ -27,6 +31,8 @@ userNumberInputText.addEventListener("blur", function(){
 // "Start Game" Clicked
 document.getElementById("start-game-btn").addEventListener("click", function () {
     userNumberInput = parseInt(userNumberInputText.value, 10);
+
+    //Check if input == null? show error : continue;
     if (userNumberInput === ""  ||  isNaN(userNumberInput) ) {
         errorMessage.style.display = "block";
         errorMessage.textContent = " Please add a number between 1 - 100";
@@ -36,7 +42,6 @@ document.getElementById("start-game-btn").addEventListener("click", function () 
     userValue = userNumberInput;
 
     // Hide the instructions and show the game area
-
     errorMessage.style.display = "none";
     instructionsContainer.style.display = "none";
     gameContainer.style.display = "block";
@@ -59,4 +64,3 @@ document.getElementById("correct-btn").addEventListener("click", function () {
     // Celebrate the AI's correct guess
     showWin();
 });
-//#endregion Game Controls
